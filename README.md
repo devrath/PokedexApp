@@ -1,6 +1,6 @@
 ![cover](https://github.com/devrath/PokedexApp/blob/main/Assets/pokedex-banner.png)
 
-<h1 align="center">PokedexApp</h1>
+<h1 align="center">𝙿𝚘𝚔𝚎𝚍𝚎𝚡𝙰𝚙𝚙</h1>
 
 <p align="center">
  <a href="https://developer.android.com/jetpack/compose?gclid=Cj0KCQiAw8OeBhCeARIsAGxWtUw2SojaB2_FaWPo-5N7mF7XpiywxLMtbSsSEU4tioR1McTBLk9MnAQaAlXSEALw_wcB&gclsrc=aw.ds"><img alt="Compose" src="https://img.shields.io/badge/jetpack%20Compose-1.3.3-blue"/></a></br> 
@@ -16,9 +16,7 @@
 
 
 
-<p align="center">  
-This application is built using JetpackCompose with mvvm architecture. It is used to display the details of pokemon by getting the data from the server
-</p>
+<p align="center">  𝚃𝚑𝚒𝚜 𝚊𝚙𝚙𝚕𝚒𝚌𝚊𝚝𝚒𝚘𝚗 𝚒𝚜 𝚋𝚞𝚒𝚕𝚝 𝚞𝚜𝚒𝚗𝚐 𝙹𝚎𝚝𝚙𝚊𝚌𝚔𝙲𝚘𝚖𝚙𝚘𝚜𝚎 𝚠𝚒𝚝𝚑 𝚖𝚟𝚟𝚖 𝚊𝚛𝚌𝚑𝚒𝚝𝚎𝚌𝚝𝚞𝚛𝚎. 𝙸𝚝 𝚒𝚜 𝚞𝚜𝚎𝚍 𝚝𝚘 𝚍𝚒𝚜𝚙𝚕𝚊𝚢 𝚝𝚑𝚎 𝚍𝚎𝚝𝚊𝚒𝚕𝚜 𝚘𝚏 𝚙𝚘𝚔𝚎𝚖𝚘𝚗 𝚋𝚢 𝚐𝚎𝚝𝚝𝚒𝚗𝚐 𝚝𝚑𝚎 𝚍𝚊𝚝𝚊 𝚏𝚛𝚘𝚖 𝚝𝚑𝚎 𝚜𝚎𝚛𝚟𝚎𝚛</p>
 </br>
 
 
