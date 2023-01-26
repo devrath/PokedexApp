@@ -17,6 +17,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.istudio.pokedex.ui.screens.pokemon_list.PokemonListScreen
 import com.istudio.pokedex.ui.theme.PokedexTheme
 
 class MainActivity : ComponentActivity() {
@@ -24,13 +25,14 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             PokedexTheme {
+                // Always create one nav controller and pass into the nav-host
                 val navController = rememberNavController()
                 NavHost(
                     navController = navController,
                     startDestination = "pokemon_list_screen"
                 ) {
                     composable("pokemon_list_screen") {
-
+                        PokemonListScreen(navController = navController)
                     }
                     composable(
                         route = "pokemon_detail_screen/{dominantColor}/{pokemonName}",
