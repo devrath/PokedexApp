@@ -21,6 +21,15 @@
 
 
 
+## **`𝙰𝙿𝙸 𝙳𝙴𝚃𝙰𝙸𝙻𝚂`** 📟
+| `𝙰𝙿𝙸-𝙽𝙰𝙼𝙴` | `𝙳𝙴𝚂𝙲𝚁𝙸𝙿𝚃𝙸𝙾𝙽` |
+| ---------- | ------------- |
+| **𝚆𝚎𝚋𝚜𝚒𝚝𝚎** | `https://pokeapi.co/` |
+| **𝙱𝚊𝚜𝚎𝚄𝚛𝚕** | `https://pokeapi.co/api/v2/` |
+| **𝙿𝚘𝚔𝚎𝚖𝚘𝚗𝙻𝚒𝚜𝚝 𝙰𝙿𝙸** | `pokemon/{NameOfPokemon}/` |
+| **𝙿𝚘𝚔𝚎𝚖𝚘𝚗𝙳𝚎𝚝𝚊𝚒𝚕𝚜 𝙰𝙿𝙸** | `pokemon/` |
+
+
 ## **`𝚂𝚞𝚙𝚙𝚘𝚛𝚝`** ☕
 If you feel like support me a coffee for my efforts, I would greatly appreciate it.</br>
 <a href="https://www.buymeacoffee.com/devrath" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/yellow_img.png" alt="Buy Me A Coffee" style="height: 41px !important;width: 174px !important;box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;" ></a>
