@@ -11,16 +11,21 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
+/**
+ * Component annotated as singleton ensures the dependencies in our app live as long as the application does
+ */
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
 
+    // Construct the repository
     @Singleton
     @Provides
     fun providePokemonRepository(
         api: PokeApi
     ) = PokemonRepository(api)
 
+    // Construct the API class
     @Singleton @Provides
     fun providePokeApi(): PokeApi {
         return Retrofit.Builder()

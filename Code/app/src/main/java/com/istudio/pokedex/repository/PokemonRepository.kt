@@ -7,11 +7,14 @@ import com.istudio.pokedex.util.Resource
 import dagger.hilt.android.scopes.ActivityScoped
 import javax.inject.Inject
 
+/**
+ * This repository is activity scoped because the repository lies till the activity is activity is in vicinity
+ * We inject the PokeApi in the constructor
+ */
 @ActivityScoped
 class PokemonRepository @Inject constructor(
    private val api: PokeApi
 ) {
-
     suspend fun getPokemonList(limit: Int, offset: Int): Resource<PokemonList> {
         val response = try {
             api.getPokemonList(limit, offset)
