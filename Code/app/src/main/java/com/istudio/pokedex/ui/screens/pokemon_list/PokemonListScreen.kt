@@ -29,6 +29,8 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.istudio.pokedex.R
+import com.istudio.pokedex.ui.screens.pokemon_list.composables.PokemonBanner
+import com.istudio.pokedex.ui.screens.pokemon_list.composables.PokemonSearch
 
 @Composable
 fun PokemonListScreen(
@@ -40,68 +42,8 @@ fun PokemonListScreen(
     ) {
         Column {
             Spacer(modifier = Modifier.height(20.dp))
-            Image(
-                painterResource(id = R.drawable.ic_international_pok_mon_logo),
-                contentDescription = "Pokemon",
-                modifier = Modifier.fillMaxWidth().align(CenterHorizontally)
-            )
-            SearchBar(
-                hint = "Search",
-                modifier = Modifier.fillMaxWidth().padding(16.dp)
-            ){
-                /**
-                 * This function gets called when someone enters something
-                 * From here, We can call a function in the view model
-                 */
-
-            }
-        }
-    }
-}
-
-@Composable
-fun SearchBar(
-    modifier: Modifier = Modifier,
-    hint: String = "",
-    onSearch: (String) -> Unit = {}
-) {
-    // Value for actual text
-    var text by remember { mutableStateOf("") }
-    // The boolean value will be true if hint displayed is true els it will be false
-    var isHintDisplayed by remember { mutableStateOf(hint != "") }
-
-    Box(modifier = modifier) {
-        BasicTextField(
-            value = text,
-            onValueChange = {
-                // Assign the new text value
-                text = it
-                // Function that we trigger on value changed
-                onSearch(it)
-            },
-            maxLines = 1,
-            singleLine = true,
-            textStyle = TextStyle(color = Color.Black),
-            modifier = Modifier
-                .fillMaxWidth()
-                .shadow(5.dp, CircleShape)
-                .background(Color.White, CircleShape)
-                .padding(horizontal = 20.dp, 12.dp)
-                .onFocusChanged {
-                    /**
-                     * User clicked the text field, So we can hide the hint here
-                     * * If hte text field has focus we hide the hint & else show it
-                     */
-                    isHintDisplayed = !it.hasFocus
-                }
-        )
-        if (isHintDisplayed) {
-            Text(
-                text = text,
-                color = Color.LightGray,
-                modifier = Modifier
-                    .padding(horizontal = 20.dp, 12.dp)
-            )
+            PokemonBanner()
+            PokemonSearch()
         }
     }
 }
