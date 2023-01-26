@@ -27,10 +27,6 @@ class PokemonListVm @Inject constructor(
     var pokemonList = mutableStateOf<List<PokedexListEntry>>(listOf())
     // Holds the error state
     var loadError = mutableStateOf("")
-    // Holds the state if the loading is in progress
-    var isLoading = mutableStateOf(false)
-    // Holds the state if the end of the list is reached
-    var endReached = mutableStateOf(false)
 
     init {
         loadPokemonPaginated()
@@ -38,31 +34,28 @@ class PokemonListVm @Inject constructor(
 
     fun loadPokemonPaginated() {
         viewModelScope.launch {
-            // Indicate that currently the page is loading
-            isLoading.value = true
             // Ge the data from API
             val result = repository.getPokemonList(PAGE_SIZE, curPage * PAGE_SIZE)
             when(result) {
                 is Resource.Success -> {
-                    endReached.value = curPage * PAGE_SIZE >= result.data!!.count
-                    val pokedexEntries = result.data.results.mapIndexed { index, entry ->
-                        val number = if(entry.url.endsWith("/")) {
-                            entry.url.dropLast(1).takeLastWhile { it.isDigit() }
-                        } else {
-                            entry.url.takeLastWhile { it.isDigit() }
+                    result.data?.results?.let {
+                        val pokedexEntries = result.data.results.mapIndexed { index, entry ->
+                            val number = if(entry.url.endsWith("/")) {
+                                entry.url.dropLast(1).takeLastWhile { it.isDigit() }
+                            } else {
+                                entry.url.takeLastWhile { it.isDigit() }
+                            }
+                            val url = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${number}.png"
+                            PokedexListEntry(entry.name.capitalize(Locale.ROOT), url, number.toInt())
                         }
-                        val url = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${number}.png"
-                        PokedexListEntry(entry.name.capitalize(Locale.ROOT), url, number.toInt())
-                    }
-                    curPage++
+                        curPage++
 
-                    loadError.value = ""
-                    isLoading.value = false
-                    pokemonList.value += pokedexEntries
+                        loadError.value = ""
+                        pokemonList.value += pokedexEntries
+                    }
                 }
                 is Resource.Error -> {
                     loadError.value = result.message!!
-                    isLoading.value = false
                 }
                 is Resource.Loading -> {
 

@@ -29,9 +29,8 @@ fun PokemonListScreen(
 
     val viewModel = hiltViewModel<PokemonListVm>()
     val pokemonList by remember { viewModel.pokemonList }
-    val endReached by remember { viewModel.endReached }
     val loadError by remember { viewModel.loadError }
-    val isLoading by remember { viewModel.isLoading }
+
     Surface(
         color = MaterialTheme.colors.background,
         modifier = Modifier.fillMaxSize()
