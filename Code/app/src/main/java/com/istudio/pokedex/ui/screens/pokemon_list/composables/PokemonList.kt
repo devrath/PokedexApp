@@ -5,15 +5,16 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
+import androidx.paging.compose.LazyPagingItems
 import com.istudio.pokedex.data.remote.models.PokedexListEntry
 
 @Composable
 fun PokemonLazyList(
-    pokemonList : List<PokedexListEntry>,
+    pokemonList: LazyPagingItems<PokedexListEntry>,
     onItemClick:(PokedexListEntry)-> Unit,
     funcCallBackImageTarget:(Drawable) -> Unit={}
 ){
@@ -25,11 +26,13 @@ fun PokemonLazyList(
         verticalArrangement = Arrangement.SpaceBetween,
         state = state
     ){
-        items(pokemonList.size) { position ->
-            PokemonListItem(
-                item=pokemonList[position],
-                onItemClick=onItemClick
-            )
+        items(pokemonList.itemCount) { position ->
+            pokemonList[position]?.let {
+                PokemonListItem(
+                    item= it,
+                    onItemClick=onItemClick
+                )
+            }
         }
     }
 }

@@ -7,62 +7,39 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.palette.graphics.Palette
+import com.istudio.pokedex.data.remote.PokeApi
 import com.istudio.pokedex.data.remote.models.PokedexListEntry
 import com.istudio.pokedex.repository.PokemonRepository
+import com.istudio.pokedex.repository.paged.PokemonSource
 import com.istudio.pokedex.util.Constants.PAGE_SIZE
 import com.istudio.pokedex.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import java.util.Locale
 import javax.inject.Inject
 
 @HiltViewModel
 class PokemonListVm @Inject constructor(
-    private val repository: PokemonRepository
+    private val repository: PokemonRepository,
+    private val api: PokeApi
 ): ViewModel() {
 
     private var curPage = 0
-    // Holds the list of item data
-    var pokemonList = mutableStateOf<List<PokedexListEntry>>(listOf())
     // Holds the error state
     var loadError = mutableStateOf("")
 
-    init {
-        loadPokemonPaginated()
-    }
 
-    fun loadPokemonPaginated() {
-        viewModelScope.launch {
-            // Ge the data from API
-            val result = repository.getPokemonList(PAGE_SIZE, curPage * PAGE_SIZE)
-            when(result) {
-                is Resource.Success -> {
-                    result.data?.results?.let {
-                        val pokedexEntries = result.data.results.mapIndexed { index, entry ->
-                            val number = if(entry.url.endsWith("/")) {
-                                entry.url.dropLast(1).takeLastWhile { it.isDigit() }
-                            } else {
-                                entry.url.takeLastWhile { it.isDigit() }
-                            }
-                            val url = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${number}.png"
-                            PokedexListEntry(entry.name.capitalize(Locale.ROOT), url, number.toInt())
-                        }
-                        curPage++
+    val pokemonList = Pager(PagingConfig(pageSize = PAGE_SIZE)) {
+        PokemonSource(api)
+    }.flow
 
-                        loadError.value = ""
-                        pokemonList.value += pokedexEntries
-                    }
-                }
-                is Resource.Error -> {
-                    loadError.value = result.message!!
-                }
-                is Resource.Loading -> {
-
-                }
-            }
-        }
-    }
 
     /**
      * What it does: It calculates the dominant color based on a drawable
