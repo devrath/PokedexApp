@@ -31,30 +31,8 @@ class PokemonListVm @Inject constructor(
     private val api: PokeApi
 ): ViewModel() {
 
-    private var curPage = 0
-    // Holds the error state
-    var loadError = mutableStateOf("")
-
-
     val pokemonList = Pager(PagingConfig(pageSize = PAGE_SIZE)) {
         PokemonSource(api)
     }.flow
-
-
-    /**
-     * What it does: It calculates the dominant color based on a drawable
-     * What it returns: Color as a function callback
-     * @param drawable
-     * @param onFinish
-     */
-    fun calcDominantColor(drawable: Drawable, onFinish: (Color) -> Unit) {
-        val bmp = (drawable as BitmapDrawable).bitmap.copy(Bitmap.Config.ARGB_8888, true)
-
-        Palette.from(bmp).generate { palette ->
-            palette?.dominantSwatch?.rgb?.let { colorValue ->
-                onFinish(Color(colorValue))
-            }
-        }
-    }
 
 }

@@ -1,5 +1,7 @@
 package com.istudio.pokedex.ui.screens.pokemon_list.composables
 
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -15,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
@@ -28,10 +31,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.palette.graphics.Palette
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.istudio.pokedex.R
 import com.istudio.pokedex.data.remote.models.PokedexListEntry
+import com.istudio.pokedex.ui.screens.pokemon_list.PokemonListVm
 import com.istudio.pokedex.ui.theme.RobotoCondensed
 
 @Composable
@@ -39,9 +45,10 @@ fun PokemonListItem(
     item: PokedexListEntry,
     onItemClick: (PokedexListEntry) -> Unit,
     modifier: Modifier = Modifier,
+    viewModel: PokemonListVm = hiltViewModel()
 ) {
     val defaultColor = Color.White
-    val pokemonDominantColor by remember { mutableStateOf(defaultColor) }
+    var pokemonDominantColor by remember { mutableStateOf(defaultColor) }
 
     Box(
         contentAlignment = Alignment.Center,
@@ -49,7 +56,7 @@ fun PokemonListItem(
             .padding(5.dp)
             .shadow(5.dp, RoundedCornerShape(10.dp))
             .clip(RoundedCornerShape(10.dp))
-            .background(Color.White)
+            .background(pokemonDominantColor)
             .clickable {
                 item.dominentColor = pokemonDominantColor
                 onItemClick(item)
@@ -72,6 +79,15 @@ fun PokemonListItem(
                 modifier = Modifier
                     .size(120.dp)
                     .align(CenterHorizontally),
+                onSuccess = { success ->
+                    val drawable = success.result.drawable
+                    val bmp = (drawable as BitmapDrawable).bitmap.copy(Bitmap.Config.ARGB_8888, true)
+                    Palette.from(bmp).generate { palette ->
+                        palette?.dominantSwatch?.rgb?.let { colorValue ->
+                            pokemonDominantColor = Color(colorValue)
+                        }
+                    }
+                }
             )
             Text(
                 text = item.pokemonName,
