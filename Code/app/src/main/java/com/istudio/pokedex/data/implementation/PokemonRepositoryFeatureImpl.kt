@@ -12,7 +12,6 @@ import javax.inject.Inject
  * This repository is activity scoped because the repository lies till the activity is activity is in vicinity
  * We inject the PokeApi in the constructor
  */
-@ActivityScoped
 class PokemonRepositoryFeatureImpl @Inject constructor(
    private val api: PokeApi
 ) : PokemonRepositoryFeature {
