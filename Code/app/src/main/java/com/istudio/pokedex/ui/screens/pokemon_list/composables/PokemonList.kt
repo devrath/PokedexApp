@@ -3,9 +3,11 @@ package com.istudio.pokedex.ui.screens.pokemon_list.composables
 import android.graphics.drawable.Drawable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -17,11 +19,9 @@ fun PokemonLazyList(
     onItemClick:(PokedexListEntry)-> Unit,
     funcCallBackImageTarget:(Drawable) -> Unit={}
 ){
-    val state = rememberLazyGridState()
-    LazyVerticalGrid(
-        columns = GridCells.Fixed(2),
+    val state = rememberLazyListState()
+    LazyColumn(
         contentPadding = PaddingValues(12.dp),
-        horizontalArrangement = Arrangement.SpaceBetween,
         verticalArrangement = Arrangement.SpaceBetween,
         state = state
     ){
