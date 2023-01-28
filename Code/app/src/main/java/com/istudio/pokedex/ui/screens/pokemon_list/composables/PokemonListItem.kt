@@ -63,7 +63,7 @@ fun PokemonListItem(
                 .crossfade(true)
                 .build(),
             contentDescription = item.pokemonName,
-            contentScale = ContentScale.Crop,
+            contentScale = ContentScale.Fit,
             modifier = Modifier
                 .size(250.dp),
             onSuccess = { success ->
