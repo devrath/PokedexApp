@@ -18,10 +18,9 @@ import com.istudio.pokedex.ui.screens.pokemon_list.composables.PokemonSearch
 
 @Composable
 fun PokemonListScreen(
-    navController: NavController
+    navController: NavController,
+    viewModel: PokemonListVm = hiltViewModel()
 ) {
-
-    val viewModel = hiltViewModel<PokemonListVm>()
 
     Surface(
         color = MaterialTheme.colors.background,
@@ -31,7 +30,6 @@ fun PokemonListScreen(
         Column {
             Spacer(modifier = Modifier.height(20.dp))
             PokemonBanner()
-            PokemonSearch()
             PokemonLazyList(
                 pokemonList = viewModel.pokemonList.value,
                 onItemClick = { entry ->
