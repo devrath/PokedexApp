@@ -1,7 +1,7 @@
 package com.istudio.pokedex.di
 
 import com.istudio.pokedex.data.remote.PokeApi
-import com.istudio.pokedex.repository.PokemonRepository
+import com.istudio.pokedex.repository.PokemonRepositoryImpl
 import com.istudio.pokedex.util.Constants.BASE_URL
 import dagger.Module
 import dagger.Provides
@@ -23,7 +23,7 @@ object AppModule {
     @Provides
     fun providePokemonRepository(
         api: PokeApi
-    ) = PokemonRepository(api)
+    ) = PokemonRepositoryImpl(api)
 
     // Construct the API class
     @Singleton @Provides
