@@ -15,6 +15,12 @@ val Roboto = FontFamily(
     Font(R.font.roboto_bold, FontWeight.Bold),
 )
 
+val Nunito = FontFamily(
+    Font(R.font.nunito_sans_bold, FontWeight.Normal),
+    Font(R.font.nunito_sans_regular, FontWeight.Normal),
+    Font(R.font.nunito_sans_italic, FontWeight.Normal),
+)
+
 val RobotoCondensed = FontFamily(
     Font(R.font.roboto_condensed_light, FontWeight.Light),
     Font(R.font.roboto_condensed_regular, FontWeight.Normal),
