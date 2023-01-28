@@ -1,8 +1,9 @@
-package com.istudio.pokedex.repository
+package com.istudio.pokedex.data.implementation
 
 import com.istudio.pokedex.data.remote.PokeApi
 import com.istudio.pokedex.data.remote.responses.Pokemon
 import com.istudio.pokedex.data.remote.responses.PokemonList
+import com.istudio.pokedex.domain.PokemonRepositoryFeature
 import com.istudio.pokedex.util.Resource
 import dagger.hilt.android.scopes.ActivityScoped
 import javax.inject.Inject
@@ -12,9 +13,9 @@ import javax.inject.Inject
  * We inject the PokeApi in the constructor
  */
 @ActivityScoped
-class PokemonRepositoryImpl @Inject constructor(
+class PokemonRepositoryFeatureImpl @Inject constructor(
    private val api: PokeApi
-) : PokemonRepository{
+) : PokemonRepositoryFeature {
     override suspend fun getPokemonList(limit: Int, offset: Int): Resource<PokemonList> {
         val response = try {
             api.getPokemonList(limit, offset)

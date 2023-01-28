@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.palette.graphics.Palette
 import com.istudio.pokedex.data.remote.models.PokedexListEntry
-import com.istudio.pokedex.repository.PokemonRepositoryImpl
+import com.istudio.pokedex.domain.PokemonRepositoryFeature
 import com.istudio.pokedex.util.Constants.PAGE_SIZE
 import com.istudio.pokedex.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,7 +19,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PokemonListVm @Inject constructor(
-    private val repository: PokemonRepositoryImpl
+    private val repository: PokemonRepositoryFeature
 ): ViewModel() {
 
     private var curPage = 0
@@ -48,9 +48,6 @@ class PokemonListVm @Inject constructor(
                             val url = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${number}.png"
                             PokedexListEntry(entry.name.capitalize(Locale.ROOT), url, number.toInt())
                         }
-                        curPage++
-
-                        loadError.value = ""
                         pokemonList.value += pokedexEntries
                     }
                 }

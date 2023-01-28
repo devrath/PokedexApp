@@ -1,10 +1,10 @@
-package com.istudio.pokedex.repository
+package com.istudio.pokedex.domain
 
 import com.istudio.pokedex.data.remote.responses.Pokemon
 import com.istudio.pokedex.data.remote.responses.PokemonList
 import com.istudio.pokedex.util.Resource
 
-interface PokemonRepository {
+interface PokemonRepositoryFeature {
     /**
      * Getting a list of pokemon
      */
