@@ -45,7 +45,8 @@ class PokemonListVm @Inject constructor(
                             } else {
                                 entry.url.takeLastWhile { it.isDigit() }
                             }
-                            val url = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${number}.png"
+                            //val url = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${number}.png"
+                            val url = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${number}.png"
                             PokedexListEntry(entry.name.capitalize(Locale.ROOT), url, number.toInt())
                         }
                         pokemonList.value += pokedexEntries
