@@ -28,6 +28,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -38,6 +40,7 @@ import coil.request.ImageRequest
 import com.istudio.pokedex.R
 import com.istudio.pokedex.data.remote.models.PokedexListEntry
 import com.istudio.pokedex.ui.screens.pokemon_list.PokemonListVm
+import com.istudio.pokedex.ui.theme.Roboto
 import com.istudio.pokedex.ui.theme.RobotoCondensed
 
 @Composable
@@ -92,8 +95,11 @@ fun PokemonListItem(
             Text(
                 text = item.pokemonName,
                 modifier = Modifier.fillMaxWidth(),
-                fontSize = 20.sp,
-                fontFamily = RobotoCondensed,
+                color = Color.White,
+                fontSize = 22.sp,
+                fontFamily = Roboto,
+                fontWeight = FontWeight.Medium,
+                fontStyle = FontStyle.Normal,
                 textAlign = TextAlign.Center
             )
         }
