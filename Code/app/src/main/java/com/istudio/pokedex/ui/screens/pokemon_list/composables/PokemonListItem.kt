@@ -42,6 +42,7 @@ import com.istudio.pokedex.data.remote.models.PokedexListEntry
 import com.istudio.pokedex.ui.screens.pokemon_list.PokemonListVm
 import com.istudio.pokedex.ui.theme.Roboto
 import com.istudio.pokedex.ui.theme.RobotoCondensed
+import com.istudio.pokedex.ui.theme.nunito
 
 @Composable
 fun PokemonListItem(
@@ -97,7 +98,7 @@ fun PokemonListItem(
                 modifier = Modifier.fillMaxWidth(),
                 color = Color.White,
                 fontSize = 22.sp,
-                fontFamily = Roboto,
+                fontFamily = nunito,
                 fontWeight = FontWeight.Medium,
                 fontStyle = FontStyle.Normal,
                 textAlign = TextAlign.Center
