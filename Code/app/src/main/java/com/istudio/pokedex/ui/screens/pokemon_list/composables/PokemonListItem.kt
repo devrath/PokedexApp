@@ -30,7 +30,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.google.accompanist.coil.CoilImage
 import com.istudio.pokedex.R
 import com.istudio.pokedex.data.remote.models.PokedexListEntry
 import com.istudio.pokedex.ui.theme.RobotoCondensed
@@ -72,7 +71,7 @@ fun PokemonListItem(
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .size(120.dp)
-                    .align(CenterHorizontally)
+                    .align(CenterHorizontally),
             )
             Text(
                 text = item.pokemonName,

@@ -28,37 +28,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             PokedexTheme {
                 // Always create one nav controller and pass into the nav-host
-                val navController = rememberNavController()
-                NavHost(
-                    navController = navController,
-                    startDestination = "pokemon_list_screen"
-                ) {
-                    composable("pokemon_list_screen") {
-                        PokemonListScreen(navController = navController)
-                    }
-                    composable(
-                        route = "pokemon_detail_screen/{dominantColor}/{pokemonName}",
-                        arguments = listOf(
-                            navArgument("dominantColor") {
-                                type = NavType.IntType
-                            },
-                            navArgument("pokemonName") {
-                                type = NavType.StringType
-                            }
-                        )
-                    ) {
-                        val dominantColor = remember {
-                            val color = it.arguments?.getInt("dominantColor")
-                            color?.let { Color(it) } ?: Color.White
-                        }
-                        val pokemonName = remember {
-                            it.arguments?.getString(
-                                "pokemonName" +
-                                    ""
-                            )
-                        }
-                    }
-                }
+                PokemonListScreen()
             }
         }
     }

@@ -1,47 +1,58 @@
 package com.istudio.pokedex.ui.screens.pokemon_list
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Scaffold
+import androidx.compose.material.SnackbarDuration
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.istudio.pokedex.data.remote.models.PokedexListEntry
 import com.istudio.pokedex.ui.screens.pokemon_list.composables.PokemonBanner
 import com.istudio.pokedex.ui.screens.pokemon_list.composables.PokemonLazyList
-import com.istudio.pokedex.ui.screens.pokemon_list.composables.PokemonSearch
+import kotlinx.coroutines.launch
 
 @Composable
 fun PokemonListScreen(
-    navController: NavController
+    viewModel: PokemonListVm = hiltViewModel()
 ) {
 
-    val viewModel = hiltViewModel<PokemonListVm>()
-    val lazyPokemonItems: LazyPagingItems<PokedexListEntry> = viewModel.pokemonList.collectAsLazyPagingItems()
+    val scaffoldState = rememberScaffoldState()
+    val scope = rememberCoroutineScope()
 
-    Surface(
-        color = MaterialTheme.colors.background,
-        modifier = Modifier.fillMaxSize()
-    ) {
+    val lazyPokemonItems: LazyPagingItems<PokedexListEntry> =
+        viewModel.pokemonList.collectAsLazyPagingItems()
 
-        Column {
+    Scaffold(
+        modifier = Modifier.fillMaxSize(),
+        scaffoldState = scaffoldState
+    ) { padding ->
+        Column(
+            Modifier.fillMaxSize().padding(5.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
             Spacer(modifier = Modifier.height(20.dp))
             PokemonBanner()
-            PokemonSearch()
             PokemonLazyList(
                 pokemonList = lazyPokemonItems,
                 onItemClick = { entry ->
-                    navController.navigate(
-                        "pokemon_detail_screen/${entry.dominentColor.toArgb()}/${entry.pokemonName}"
-                    )
+                    scope.launch {
+                        scaffoldState.snackbarHostState.showSnackbar(
+                            message = entry.pokemonName,
+                            duration = SnackbarDuration.Short
+                        )
+                    }
                 }
             )
         }
