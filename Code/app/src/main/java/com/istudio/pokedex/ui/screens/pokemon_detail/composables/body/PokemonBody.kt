@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.istudio.pokedex.R
 import com.istudio.pokedex.data.remote.responses.Pokemon
+import com.istudio.pokedex.ui.screens.common.composables.PokemonErrorBlock
 import com.istudio.pokedex.ui.screens.pokemon_detail.composables.PokemonDetailSection
 import com.istudio.pokedex.util.Resource
 
@@ -37,6 +38,7 @@ fun PokemonBody(
     modifier: Modifier = Modifier,
     topPadding: Dp = 20.dp,
     pokemonImageSize: Dp = 200.dp,
+    onRetryClick : () -> Unit = {}
 ) {
     val screenTopPadding = topPadding + pokemonImageSize / 2f
     val screenPadding = 16.dp
@@ -65,36 +67,17 @@ fun PokemonBody(
 
         when (pokemonInfo) {
             is Resource.Success -> {
-               /* PokemonDetailSection(
+                PokemonDetailSection(
                     pokemonInfo = pokemonInfo.data!!,
                     modifier = modifier
                         .offset(y = (-20).dp)
-                )*/
-
-                Column(
-                    modifier = Modifier.align(Alignment.Center),
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    // Message
-                    val genericMessage = pokemonInfo.message ?: stringResource(id = R.string.str_something_went_wrong)
-                    val noNetConnectivity = pokemonInfo.message ?: stringResource(id = R.string.str_something_went_wrong)
-                    val tryAgain =  stringResource(id = R.string.str_try_again)
-                    Text(
-                        text = genericMessage,
-                        color = Color.Red,
-                    )
-                    Button(onClick = { /*TODO*/ }) {
-                        Text(text = tryAgain)
-                    }
-                }
-                
+                )
             }
             is Resource.Error -> {
-                Text(
-                    text = pokemonInfo.message!!,
-                    color = Color.Red,
-                    modifier = modifier.align(Alignment.Center)
+                PokemonErrorBlock(
+                    text = stringResource(id = R.string.str_something_went_wrong),
+                    image = painterResource(R.drawable.ic_something_went_wrong),
+                    onActionClick = onRetryClick
                 )
             }
             is Resource.Loading -> {
@@ -105,6 +88,7 @@ fun PokemonBody(
                         .align(Alignment.Center)
                 )
             }
+            else -> {}
         }
     }
 

@@ -13,6 +13,7 @@ import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.currentComposer
 import androidx.compose.runtime.produceState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -69,7 +70,10 @@ fun PokemonDetailScreen(
         PokemonBody(
             pokemonInfo = pokemonInfo,
             topPadding = topPadding,
-            pokemonImageSize = pokemonImageSize
+            pokemonImageSize = pokemonImageSize,
+            onRetryClick = {
+
+            }
         )
 
         Box(
