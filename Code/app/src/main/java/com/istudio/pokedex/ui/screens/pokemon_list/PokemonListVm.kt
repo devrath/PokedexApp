@@ -11,6 +11,7 @@ import androidx.palette.graphics.Palette
 import com.istudio.pokedex.data.remote.models.PokedexListEntry
 import com.istudio.pokedex.domain.PokemonRepositoryFeature
 import com.istudio.pokedex.util.Constants.PAGE_SIZE
+import com.istudio.pokedex.util.PokemonUtils
 import com.istudio.pokedex.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -40,13 +41,8 @@ class PokemonListVm @Inject constructor(
                 is Resource.Success -> {
                     result.data?.results?.let {
                         val pokedexEntries = result.data.results.mapIndexed { index, entry ->
-                            val number = if(entry.url.endsWith("/")) {
-                                entry.url.dropLast(1).takeLastWhile { it.isDigit() }
-                            } else {
-                                entry.url.takeLastWhile { it.isDigit() }
-                            }
-                            //val url = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${number}.png"
-                            val url = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${number}.png"
+                            val number = PokemonUtils.getPokemonNumber(entry)
+                            val url = PokemonUtils.formatPokemonUrl(entry.url)
                             PokedexListEntry(entry.name.capitalize(Locale.ROOT), url, number.toInt())
                         }
                         pokemonList.value += pokedexEntries
