@@ -7,18 +7,18 @@
     <color name="teal_700">#FF018786</color>
 
     <!-- Material colors -->
-    <color name="primary">#FF6200EE</color>
+    <color name="primary">#FFBB86FC</color>
     <color name="primaryVariant">#FF3700B3</color>
     <color name="secondary">#FF03DAC6</color>
-    <color name="secondaryVariant">#FF018786</color>
-    <color name="background">#FFFFFFFF</color>
-    <color name="surface">#FFFFFFFF</color>
-    <color name="error">#FFB00020</color>
-    <color name="onPrimary">#FFFFFFFF</color>
+    <color name="secondaryVariant">#FF03DAC6</color>
+    <color name="background">#FF121212</color>
+    <color name="surface">#FF121212</color>
+    <color name="error">#FFCF6679</color>
+    <color name="onPrimary">#00000000</color>
     <color name="onSecondary">#00000000</color>
-    <color name="onBackground">#00000000</color>
-    <color name="onSurface">#00000000</color>
-    <color name="onError">#FFFFFFFF</color>
+    <color name="onBackground">#FFFFFFFF</color>
+    <color name="onSurface">#FFFFFFFF</color>
+    <color name="onError">#00000000</color>
     <!-- Material colors -->
 
     <color name="black">#FF000000</color>
