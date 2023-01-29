@@ -29,6 +29,7 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.istudio.pokedex.data.remote.responses.Pokemon
 import com.istudio.pokedex.ui.screens.pokemon_detail.composables.PokemonDetailSection
+import com.istudio.pokedex.ui.screens.pokemon_detail.composables.body.PokemonBody
 import com.istudio.pokedex.ui.screens.pokemon_detail.composables.header.PokemonHeader
 import com.istudio.pokedex.util.PokemonUtils
 import com.istudio.pokedex.util.Resource
@@ -55,6 +56,7 @@ fun PokemonDetailScreen(
             .background(dominantColor)
             .padding(bottom = 16.dp)
     ) {
+
         PokemonHeader(
             modifier = Modifier
                 .fillMaxWidth()
@@ -64,31 +66,12 @@ fun PokemonDetailScreen(
             navController.popBackStack()
         }
 
-        PokemonDetailStateWrapper(
+        PokemonBody(
             pokemonInfo = pokemonInfo,
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(
-                    top = topPadding + pokemonImageSize / 2f,
-                    start = 16.dp,
-                    end = 16.dp,
-                    bottom = 16.dp
-                )
-                .shadow(10.dp, RoundedCornerShape(10.dp))
-                .clip(RoundedCornerShape(10.dp))
-                .background(MaterialTheme.colors.surface)
-                .padding(16.dp)
-                .align(Alignment.BottomCenter),
-            loadingModifier = Modifier
-                .size(100.dp)
-                .align(Alignment.Center)
-                .padding(
-                    top = topPadding + pokemonImageSize / 2f,
-                    start = 16.dp,
-                    end = 16.dp,
-                    bottom = 16.dp
-                )
+            topPadding = topPadding,
+            pokemonImageSize = pokemonImageSize
         )
+
         Box(
             contentAlignment = Alignment.TopCenter,
             modifier = Modifier
@@ -114,36 +97,6 @@ fun PokemonDetailScreen(
                     )
                 }
             }
-        }
-    }
-}
-
-@Composable
-fun PokemonDetailStateWrapper(
-    pokemonInfo: Resource<Pokemon>,
-    modifier: Modifier = Modifier,
-    loadingModifier: Modifier = Modifier
-) {
-    when (pokemonInfo) {
-        is Resource.Success -> {
-            PokemonDetailSection(
-                pokemonInfo = pokemonInfo.data!!,
-                modifier = modifier
-                    .offset(y = (-20).dp)
-            )
-        }
-        is Resource.Error -> {
-            Text(
-                text = pokemonInfo.message!!,
-                color = Color.Red,
-                modifier = modifier
-            )
-        }
-        is Resource.Loading -> {
-            CircularProgressIndicator(
-                color = MaterialTheme.colors.primary,
-                modifier = loadingModifier
-            )
         }
     }
 }

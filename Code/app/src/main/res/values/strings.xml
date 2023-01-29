@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Pokedex</string>
+
+
+
+    <string name="str_something_went_wrong">Something went wrong</string>
+    <string name="str_no_connectivity">No Connectivity</string>
+    <string name="str_try_again">Try Again</string>
+
 </resources>
