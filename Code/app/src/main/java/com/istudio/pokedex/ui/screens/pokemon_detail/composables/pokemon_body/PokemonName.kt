@@ -12,7 +12,7 @@ import com.istudio.pokedex.ui.theme.Nunito
 import com.istudio.pokedex.util.PokemonUtils.capitalizeText
 
 @Composable
-fun PokemonDetailName(
+fun PokemonName(
     id: Int, name: String
 ) {
 
@@ -32,5 +32,5 @@ fun PokemonDetailName(
 @Preview
 @Composable
 private fun CurrentScreen() {
-    PokemonDetailName(2, "Ivysaur")
+    PokemonName(2, "Ivysaur")
 }

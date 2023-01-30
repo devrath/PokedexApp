@@ -22,7 +22,7 @@ import com.istudio.pokedex.util.PokemonUtils
 import com.istudio.pokedex.util.parseTypeToColor
 
 @Composable
-fun PokemonTypeSection(types: List<Type>) {
+fun PokemonTypes(types: List<Type>) {
     val viewOuterPadding = 16.dp
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -59,7 +59,7 @@ fun PokemonTypeSection(types: List<Type>) {
 
 @Composable @Preview
 private fun CurrentScreen() {
-    PokemonTypeSection(
+    PokemonTypes(
         listOf(
             Type(slot = 1, type = TypeX(name = "fighting", url = "")),
             Type(slot = 2, type = TypeX(name = "fairy", url = ""))

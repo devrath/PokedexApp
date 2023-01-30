@@ -2,6 +2,7 @@ package com.istudio.pokedex.util
 
 import com.istudio.pokedex.data.remote.responses.Result
 import java.util.Locale
+import kotlin.math.roundToInt
 
 object PokemonUtils {
 
@@ -31,5 +32,8 @@ object PokemonUtils {
         return text.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.ROOT) else it.toString() }
     }
 
+    fun weightHeightMeasurement(value :Int): String {
+        return ((value * 100f).roundToInt() / 1000f).toInt().toString()
+    }
 
 }

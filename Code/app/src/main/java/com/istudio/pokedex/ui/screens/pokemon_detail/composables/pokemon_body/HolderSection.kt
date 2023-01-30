@@ -25,9 +25,9 @@ fun PokemonDetailSection(
             .offset(y = 100.dp)
             .verticalScroll(scrollState)
     ) {
-        PokemonDetailName(id = pokemonInfo.id, name = pokemonInfo.name)
-        PokemonTypeSection(types = pokemonInfo.types)
-        PokemonDetailDataSection(
+        PokemonName(id = pokemonInfo.id, name = pokemonInfo.name)
+        PokemonTypes(types = pokemonInfo.types)
+        PokemonAttributes(
             pokemonWeight = pokemonInfo.weight,
             pokemonHeight = pokemonInfo.height
         )
