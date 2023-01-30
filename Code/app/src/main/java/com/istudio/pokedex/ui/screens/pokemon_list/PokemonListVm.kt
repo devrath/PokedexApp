@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.palette.graphics.Palette
 import com.istudio.pokedex.data.remote.models.PokedexListEntry
-import com.istudio.pokedex.domain.PokemonRepositoryFeature
+import com.istudio.pokedex.domain.feature.PokemonRepositoryFeature
 import com.istudio.pokedex.util.Constants.PAGE_SIZE
 import com.istudio.pokedex.util.PokemonUtils
 import com.istudio.pokedex.util.Resource
