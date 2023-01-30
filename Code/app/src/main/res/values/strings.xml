@@ -10,5 +10,6 @@
     <string name="str_height">Height</string>
     <string name="str_kg">Kg</string>
     <string name="str_meter">Meter</string>
+    <string name="str_base_stats">Base stats</string>
 
 </resources>

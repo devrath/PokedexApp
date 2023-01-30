@@ -1,4 +1,4 @@
-package com.istudio.pokedex.ui.screens.pokemon_detail.composables
+package com.istudio.pokedex.ui.screens.pokemon_detail.composables.pokemon_body.stats
 
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
@@ -33,15 +33,14 @@ fun PokemonStat(
     statValue: Int,
     statMaxValue: Int,
     statColor: Color,
-    height: Dp = 28.dp,
+    height: Dp = 5.dp,
     animDuration: Int = 1000,
     animDelay: Int = 0
 ) {
-    var animationPlayed by remember {
-        mutableStateOf(false)
-    }
+    var animationPlayed by remember { mutableStateOf(false) }
+
     val curPercent = animateFloatAsState(
-        targetValue = if(animationPlayed) {
+        targetValue = if (animationPlayed) {
             statValue / statMaxValue.toFloat()
         } else 0f,
         animationSpec = tween(
@@ -74,15 +73,6 @@ fun PokemonStat(
                 .clip(CircleShape)
                 .background(statColor)
                 .padding(horizontal = 8.dp)
-        ) {
-            Text(
-                text = statName,
-                fontWeight = FontWeight.Bold
-            )
-            Text(
-                text = (curPercent.value * statMaxValue).toInt().toString(),
-                fontWeight = FontWeight.Bold
-            )
-        }
+        ) { }
     }
 }
