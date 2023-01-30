@@ -1,4 +1,4 @@
-package com.istudio.pokedex.ui.screens.pokemon_detail.composables
+package com.istudio.pokedex.ui.screens.pokemon_detail.composables.pokemon_body
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
@@ -13,6 +13,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.istudio.pokedex.R
+import com.istudio.pokedex.ui.screens.pokemon_detail.composables.PokemonDetailDataItem
 
 @Composable
 fun PokemonDetailDataSection(

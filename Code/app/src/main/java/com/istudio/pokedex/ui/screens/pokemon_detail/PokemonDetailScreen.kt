@@ -27,8 +27,8 @@ import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.istudio.pokedex.domain.states.PokemonDetailView
-import com.istudio.pokedex.ui.screens.pokemon_detail.composables.body.PokemonBody
-import com.istudio.pokedex.ui.screens.pokemon_detail.composables.header.PokemonHeader
+import com.istudio.pokedex.ui.screens.pokemon_detail.composables.pokemon_body.PokemonBody
+import com.istudio.pokedex.ui.screens.pokemon_detail.composables.pokemon_header.PokemonHeader
 import com.istudio.pokedex.util.PokemonUtils
 import kotlinx.coroutines.launch
 

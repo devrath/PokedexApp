@@ -1,4 +1,4 @@
-package com.istudio.pokedex.ui.screens.pokemon_detail.composables.header
+package com.istudio.pokedex.ui.screens.pokemon_detail.composables.pokemon_header
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
