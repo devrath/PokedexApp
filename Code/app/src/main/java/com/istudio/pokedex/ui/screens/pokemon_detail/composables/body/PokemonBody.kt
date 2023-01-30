@@ -20,7 +20,6 @@ import com.istudio.pokedex.R
 import com.istudio.pokedex.domain.states.PokemonDetailView
 import com.istudio.pokedex.ui.screens.common.composables.PokemonErrorBlock
 import com.istudio.pokedex.ui.screens.common.composables.PokemonLoaderBlock
-import com.istudio.pokedex.ui.screens.pokemon_detail.composables.PokemonDetailSection
 
 @Composable
 fun PokemonBody(

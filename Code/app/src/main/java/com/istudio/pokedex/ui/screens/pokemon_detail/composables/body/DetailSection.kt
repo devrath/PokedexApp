@@ -1,4 +1,4 @@
-package com.istudio.pokedex.ui.screens.pokemon_detail.composables
+package com.istudio.pokedex.ui.screens.pokemon_detail.composables.body
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,6 +15,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.istudio.pokedex.data.remote.responses.Pokemon
+import com.istudio.pokedex.ui.screens.pokemon_detail.composables.PokemonBaseStats
+import com.istudio.pokedex.ui.screens.pokemon_detail.composables.PokemonDetailDataSection
+import com.istudio.pokedex.ui.screens.pokemon_detail.composables.PokemonTypeSection
 import java.util.Locale
 
 @Composable
@@ -30,13 +33,7 @@ fun PokemonDetailSection(
             .offset(y = 100.dp)
             .verticalScroll(scrollState)
     ) {
-        Text(
-            text = "#${pokemonInfo.id} ${pokemonInfo.name.capitalize(Locale.ROOT)}",
-            fontWeight = FontWeight.Bold,
-            fontSize = 30.sp,
-            textAlign = TextAlign.Center,
-            color = MaterialTheme.colors.onSurface
-        )
+        PokemonDetailName(id = pokemonInfo.id, name = pokemonInfo.name)
         PokemonTypeSection(types = pokemonInfo.types)
         PokemonDetailDataSection(
             pokemonWeight = pokemonInfo.weight,
