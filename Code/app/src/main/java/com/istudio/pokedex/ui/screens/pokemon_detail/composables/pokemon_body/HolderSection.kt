@@ -11,6 +11,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.istudio.pokedex.data.remote.responses.Pokemon
 import com.istudio.pokedex.ui.screens.pokemon_detail.composables.PokemonBaseStats
+import com.istudio.pokedex.ui.screens.pokemon_detail.composables.pokemon_body.attributes.PokemonAttributes
+import com.istudio.pokedex.ui.screens.pokemon_detail.composables.pokemon_body.name.PokemonName
 
 @Composable
 fun PokemonDetailSection(

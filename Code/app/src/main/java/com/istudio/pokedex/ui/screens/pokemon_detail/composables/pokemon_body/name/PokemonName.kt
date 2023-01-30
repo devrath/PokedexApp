@@ -1,4 +1,4 @@
-package com.istudio.pokedex.ui.screens.pokemon_detail.composables.pokemon_body
+package com.istudio.pokedex.ui.screens.pokemon_detail.composables.pokemon_body.name
 
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text

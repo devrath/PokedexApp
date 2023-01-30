@@ -1,4 +1,4 @@
-package com.istudio.pokedex.ui.screens.pokemon_detail.composables.pokemon_body
+package com.istudio.pokedex.ui.screens.pokemon_detail.composables.pokemon_body.attributes
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
@@ -15,7 +15,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.istudio.pokedex.R
-import com.istudio.pokedex.ui.screens.pokemon_detail.composables.PokemonDetailDataItem
 import com.istudio.pokedex.util.PokemonUtils.weightHeightMeasurement
 
 @Composable
