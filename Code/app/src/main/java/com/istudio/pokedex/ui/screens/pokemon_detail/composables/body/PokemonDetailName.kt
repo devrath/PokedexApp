@@ -9,6 +9,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import com.istudio.pokedex.ui.theme.Nunito
+import com.istudio.pokedex.util.PokemonUtils.capitalizeText
 import java.util.Locale
 
 @Composable
@@ -16,12 +17,7 @@ fun PokemonDetailName(
     id: Int, name: String
 ) {
 
-    val pokemonName = name.replaceFirstChar {
-        if (it.isLowerCase())
-            it.titlecase(Locale.ROOT)
-        else
-            it.toString()
-    }
+    val pokemonName = capitalizeText(name)
 
     Text(
         text = "#${id} $pokemonName",

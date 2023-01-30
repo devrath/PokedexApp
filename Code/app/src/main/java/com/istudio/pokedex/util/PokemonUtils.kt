@@ -1,6 +1,7 @@
 package com.istudio.pokedex.util
 
 import com.istudio.pokedex.data.remote.responses.Result
+import java.util.Locale
 
 object PokemonUtils {
 
@@ -10,12 +11,7 @@ object PokemonUtils {
         } else {
             pokemonUrl.takeLastWhile { it.isDigit() }
         }
-        //val url = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${number}.png"
         return "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${number}.png"
-
-        // https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png
-        // https://pokeapi.co/api/v2/pokemon/1/
-        // https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${number}.png
     }
 
     fun formatPokemonDetailUrl(pokemonUrl: String): String {
@@ -29,6 +25,10 @@ object PokemonUtils {
             entry.url.takeLastWhile { it.isDigit() }
         }
         return number
+    }
+
+    fun capitalizeText(text :String): String {
+        return text.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.ROOT) else it.toString() }
     }
 
 

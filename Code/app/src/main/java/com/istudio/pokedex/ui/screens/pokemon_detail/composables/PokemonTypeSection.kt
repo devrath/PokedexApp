@@ -12,35 +12,57 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.istudio.pokedex.data.remote.responses.Type
+import com.istudio.pokedex.data.remote.responses.TypeX
+import com.istudio.pokedex.ui.theme.Nunito
+import com.istudio.pokedex.util.PokemonUtils
 import com.istudio.pokedex.util.parseTypeToColor
-import java.util.Locale
 
 @Composable
 fun PokemonTypeSection(types: List<Type>) {
+    val viewOuterPadding = 16.dp
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier
-            .padding(16.dp)
+        modifier = Modifier.padding(viewOuterPadding)
     ) {
-        for(type in types) {
+
+        val weight = 1f
+        val viewInnerPadding = 8.dp
+        val viewHeight = 35.dp
+        val viewFontSize = 18.sp
+        val textColor = Color.White
+
+        for (type in types) {
             Box(
                 contentAlignment = Alignment.Center,
                 modifier = Modifier
-                    .weight(1f)
-                    .padding(horizontal = 8.dp)
+                    .weight(weight)
+                    .padding(horizontal = viewInnerPadding)
                     .clip(CircleShape)
                     .background(parseTypeToColor(type))
-                    .height(35.dp)
+                    .height(viewHeight)
             ) {
+                val pokemonTypeName = PokemonUtils.capitalizeText(type.type.name)
                 Text(
-                    text = type.type.name.capitalize(Locale.ROOT),
-                    color = Color.White,
-                    fontSize = 18.sp
+                    text = pokemonTypeName,
+                    color = textColor,
+                    fontSize = viewFontSize,
+                    fontFamily = Nunito
                 )
             }
         }
     }
+}
+
+@Composable @Preview
+private fun CurrentScreen() {
+    PokemonTypeSection(
+        listOf(
+            Type(slot = 1, type = TypeX(name = "fighting", url = "")),
+            Type(slot = 2, type = TypeX(name = "fairy", url = ""))
+        )
+    )
 }
