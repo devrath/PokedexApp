@@ -63,7 +63,7 @@ fun PokemonDetailDataItem(
                 fontFamily = Nunito,
                 fontWeight = FontWeight.Normal,
                 fontSize = attributeTagSize,
-                color = Color.LightGray
+                color = MaterialTheme.colors.onSurface
             )
         }
 
