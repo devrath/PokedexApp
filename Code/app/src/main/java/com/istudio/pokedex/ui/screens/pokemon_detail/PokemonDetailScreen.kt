@@ -26,7 +26,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.istudio.pokedex.domain.states.PokemonDetailState
+import com.istudio.pokedex.domain.states.PokemonDetailView
 import com.istudio.pokedex.ui.screens.pokemon_detail.composables.body.PokemonBody
 import com.istudio.pokedex.ui.screens.pokemon_detail.composables.header.PokemonHeader
 import com.istudio.pokedex.util.PokemonUtils
@@ -42,18 +42,13 @@ fun PokemonDetailScreen(
     viewModel: PokemonDetailVm = hiltViewModel()
 ) {
 
-    var pokemonDetailData by remember {
-        mutableStateOf(PokemonDetailState(
-            data = null, isLoading = true,hasError = false,errorMessage = null
-        ))
-    }
+    var pokemonDetailData by remember { mutableStateOf<PokemonDetailView>(PokemonDetailView.DisplayLoadingView) }
     val pokemonDetailScope = rememberCoroutineScope()
+
 
     LaunchedEffect(key1 = true){
         viewModel.getPokemonDetails(pokemonName)
-        viewModel.state.collect{
-            pokemonDetailData = it
-        }
+        viewModel.state.collect{ pokemonDetailData = it }
     }
 
     Box(
@@ -87,9 +82,13 @@ fun PokemonDetailScreen(
             modifier = Modifier
                 .fillMaxSize()
         ) {
-            // Display the image if the API is successful
-            if(!pokemonDetailData.hasError && !pokemonDetailData.isLoading){
-                pokemonDetailData.data?.sprites?.let {
+
+
+            if(pokemonDetailData is PokemonDetailView.DisplayPokemonView){
+
+                val data = (pokemonDetailData as PokemonDetailView.DisplayPokemonView).data
+
+                data.sprites.let {
                     // Image is available
                     val url = PokemonUtils.formatPokemonDetailUrl(it.frontDefault)
                     AsyncImage(
@@ -97,7 +96,7 @@ fun PokemonDetailScreen(
                             .data(url)
                             .crossfade(true)
                             .build(),
-                        contentDescription = pokemonDetailData.data?.name,
+                        contentDescription = data.name,
                         contentScale = ContentScale.Fit,
                         modifier = Modifier
                             // Set the default size passed to the composable

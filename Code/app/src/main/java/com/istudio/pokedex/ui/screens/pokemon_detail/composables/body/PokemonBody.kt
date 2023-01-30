@@ -19,14 +19,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.istudio.pokedex.R
-import com.istudio.pokedex.domain.states.PokemonDetailState
+import com.istudio.pokedex.domain.states.PokemonDetailView
 import com.istudio.pokedex.ui.screens.common.composables.PokemonErrorBlock
 import com.istudio.pokedex.ui.screens.pokemon_detail.composables.PokemonDetailSection
-import com.istudio.pokedex.util.Resource
 
 @Composable
 fun PokemonBody(
-    pokemonInfo: PokemonDetailState,
+    pokemonInfo: PokemonDetailView,
     modifier: Modifier = Modifier,
     topPadding: Dp = 20.dp,
     pokemonImageSize: Dp = 200.dp,
@@ -57,15 +56,16 @@ fun PokemonBody(
             .padding(16.dp)
     ) {
 
-        when {
-            pokemonInfo.hasError -> {
+
+        when(pokemonInfo){
+            is PokemonDetailView.DisplayErrorView -> {
                 PokemonErrorBlock(
                     text = stringResource(id = R.string.str_something_went_wrong),
                     image = painterResource(R.drawable.ic_something_went_wrong),
                     onActionClick = onRetryClick
                 )
             }
-            pokemonInfo.isLoading -> {
+            is PokemonDetailView.DisplayLoadingView -> {
                 CircularProgressIndicator(
                     color = MaterialTheme.colors.primary,
                     modifier = Modifier
@@ -73,15 +73,14 @@ fun PokemonBody(
                         .align(Alignment.Center)
                 )
             }
-            pokemonInfo.data!=null -> {
+            is PokemonDetailView.DisplayPokemonView -> {
                 PokemonDetailSection(
-                    pokemonInfo = pokemonInfo.data!!,
+                    pokemonInfo = pokemonInfo.data,
                     modifier = modifier
                         .offset(y = (-20).dp)
                 )
             }
         }
-
     }
 
 }

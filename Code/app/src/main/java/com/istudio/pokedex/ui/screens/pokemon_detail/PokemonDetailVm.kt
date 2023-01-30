@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.istudio.pokedex.data.remote.responses.Pokemon
 import com.istudio.pokedex.domain.feature.PokemonRepositoryFeature
 import com.istudio.pokedex.domain.states.PokemonDetailState
+import com.istudio.pokedex.domain.states.PokemonDetailView
 import com.istudio.pokedex.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -21,41 +22,24 @@ class PokemonDetailVm @Inject constructor(
     private val repository: PokemonRepositoryFeature
 ): ViewModel(){
 
-    private val _state = MutableSharedFlow<PokemonDetailState>()
+    private val _state = MutableSharedFlow<PokemonDetailView>()
     val state = _state.asSharedFlow()
-
-    /*suspend fun getPokemonInfo(pokemonName:String): Resource<Pokemon>{
-        return repository.getPokemonInfo(pokemonName)
-    }
-    */
 
     suspend fun getPokemonDetails(pokemonName:String) {
         viewModelScope.launch {
-            val pokemonInfo = repository.getPokemonInfo(pokemonName)
-            when(pokemonInfo){
+            when(val pokemonInfo = repository.getPokemonInfo(pokemonName)){
                 is Resource.Error -> {
-                    _state.emit(
-                        PokemonDetailState(
-                            data = null, isLoading = true,
-                            hasError = true, errorMessage = pokemonInfo.message
-                        )
-                    )
+                    pokemonInfo.message?.let {
+                        _state.emit(PokemonDetailView.DisplayErrorView(message = it))
+                    }
                 }
                 is Resource.Loading -> {
-                    _state.emit(
-                        PokemonDetailState(
-                            data = null, isLoading = true,
-                            hasError = false, errorMessage = null
-                        )
-                    )
+                    _state.emit(PokemonDetailView.DisplayLoadingView)
                 }
                 is Resource.Success ->  {
-                    _state.emit(
-                        PokemonDetailState(
-                            data = pokemonInfo.data, isLoading = false,
-                            hasError = false, errorMessage = null
-                        )
-                    )
+                    pokemonInfo.data?.let {
+                        _state.emit(PokemonDetailView.DisplayPokemonView(data = it))
+                    }
                 }
             }
         }
