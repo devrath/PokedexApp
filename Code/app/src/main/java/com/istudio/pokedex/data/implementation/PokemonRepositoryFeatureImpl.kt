@@ -3,7 +3,7 @@ package com.istudio.pokedex.data.implementation
 import com.istudio.pokedex.data.remote.PokeApi
 import com.istudio.pokedex.data.remote.responses.Pokemon
 import com.istudio.pokedex.data.remote.responses.PokemonList
-import com.istudio.pokedex.domain.PokemonRepositoryFeature
+import com.istudio.pokedex.domain.feature.PokemonRepositoryFeature
 import com.istudio.pokedex.util.Resource
 import dagger.hilt.android.scopes.ViewModelScoped
 import javax.inject.Inject

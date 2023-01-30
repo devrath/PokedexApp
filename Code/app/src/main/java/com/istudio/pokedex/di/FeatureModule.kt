@@ -1,7 +1,7 @@
 package com.istudio.pokedex.di
 
 import com.istudio.pokedex.data.implementation.PokemonRepositoryFeatureImpl
-import com.istudio.pokedex.domain.PokemonRepositoryFeature
+import com.istudio.pokedex.domain.feature.PokemonRepositoryFeature
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

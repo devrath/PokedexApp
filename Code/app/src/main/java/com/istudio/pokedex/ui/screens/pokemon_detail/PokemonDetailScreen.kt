@@ -8,17 +8,15 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.currentComposer
-import androidx.compose.runtime.produceState
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -28,12 +26,11 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.istudio.pokedex.data.remote.responses.Pokemon
-import com.istudio.pokedex.ui.screens.pokemon_detail.composables.PokemonDetailSection
+import com.istudio.pokedex.domain.states.PokemonDetailView
 import com.istudio.pokedex.ui.screens.pokemon_detail.composables.body.PokemonBody
 import com.istudio.pokedex.ui.screens.pokemon_detail.composables.header.PokemonHeader
 import com.istudio.pokedex.util.PokemonUtils
-import com.istudio.pokedex.util.Resource
+import kotlinx.coroutines.launch
 
 @Composable
 fun PokemonDetailScreen(
@@ -44,12 +41,15 @@ fun PokemonDetailScreen(
     pokemonImageSize: Dp = 200.dp,
     viewModel: PokemonDetailVm = hiltViewModel()
 ) {
-    /**
-     * This takes a initial state and with that we get a coroutine scope where we can call a API and assign the data into the value
-     */
-    val pokemonInfo = produceState<Resource<Pokemon>>(initialValue = Resource.Loading()) {
-        value = viewModel.getPokemonInfo(pokemonName)
-    }.value
+
+    var pokemonDetailData by remember { mutableStateOf<PokemonDetailView>(PokemonDetailView.DisplayLoadingView) }
+    val pokemonDetailScope = rememberCoroutineScope()
+
+
+    LaunchedEffect(key1 = true){
+        viewModel.getPokemonDetails(pokemonName)
+        viewModel.state.collect{ pokemonDetailData = it }
+    }
 
     Box(
         modifier = Modifier
@@ -68,22 +68,27 @@ fun PokemonDetailScreen(
         }
 
         PokemonBody(
-            pokemonInfo = pokemonInfo,
+            pokemonInfo = pokemonDetailData,
             topPadding = topPadding,
-            pokemonImageSize = pokemonImageSize,
-            onRetryClick = {
-
+            pokemonImageSize = pokemonImageSize
+        ) {
+            pokemonDetailScope.launch {
+                viewModel.getPokemonDetails(pokemonName)
             }
-        )
+        }
 
         Box(
             contentAlignment = Alignment.TopCenter,
             modifier = Modifier
                 .fillMaxSize()
         ) {
-            // Display the image if the API is successful
-            if (pokemonInfo is Resource.Success) {
-                pokemonInfo.data?.sprites?.let {
+
+
+            if(pokemonDetailData is PokemonDetailView.DisplayPokemonView){
+
+                val data = (pokemonDetailData as PokemonDetailView.DisplayPokemonView).data
+
+                data.sprites.let {
                     // Image is available
                     val url = PokemonUtils.formatPokemonDetailUrl(it.frontDefault)
                     AsyncImage(
@@ -91,7 +96,7 @@ fun PokemonDetailScreen(
                             .data(url)
                             .crossfade(true)
                             .build(),
-                        contentDescription = pokemonInfo.data.name,
+                        contentDescription = data.name,
                         contentScale = ContentScale.Fit,
                         modifier = Modifier
                             // Set the default size passed to the composable
@@ -103,4 +108,5 @@ fun PokemonDetailScreen(
             }
         }
     }
+
 }

@@ -1,4 +1,4 @@
-package com.istudio.pokedex.domain
+package com.istudio.pokedex.domain.feature
 
 import com.istudio.pokedex.data.remote.responses.Pokemon
 import com.istudio.pokedex.data.remote.responses.PokemonList
