@@ -5,9 +5,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -21,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import com.istudio.pokedex.R
 import com.istudio.pokedex.domain.states.PokemonDetailView
 import com.istudio.pokedex.ui.screens.common.composables.PokemonErrorBlock
+import com.istudio.pokedex.ui.screens.common.composables.PokemonLoaderBlock
 import com.istudio.pokedex.ui.screens.pokemon_detail.composables.PokemonDetailSection
 
 @Composable
@@ -56,9 +55,9 @@ fun PokemonBody(
             .padding(16.dp)
     ) {
 
-
-        when(pokemonInfo){
+        when (pokemonInfo) {
             is PokemonDetailView.DisplayErrorView -> {
+                //-> Error
                 PokemonErrorBlock(
                     text = stringResource(id = R.string.str_something_went_wrong),
                     image = painterResource(R.drawable.ic_something_went_wrong),
@@ -66,14 +65,11 @@ fun PokemonBody(
                 )
             }
             is PokemonDetailView.DisplayLoadingView -> {
-                CircularProgressIndicator(
-                    color = MaterialTheme.colors.primary,
-                    modifier = Modifier
-                        .size(100.dp)
-                        .align(Alignment.Center)
-                )
+                //-> Loading
+                PokemonLoaderBlock(modifier = modifier.align(Alignment.Center))
             }
             is PokemonDetailView.DisplayPokemonView -> {
+                //-> Content
                 PokemonDetailSection(
                     pokemonInfo = pokemonInfo.data,
                     modifier = modifier
@@ -82,5 +78,4 @@ fun PokemonBody(
             }
         }
     }
-
 }
