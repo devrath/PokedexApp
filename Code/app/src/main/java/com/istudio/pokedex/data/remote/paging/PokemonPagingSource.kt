@@ -23,7 +23,8 @@ class PokemonPagingSource(
         return try {
 
             val page = params.key ?: 1
-            val response = api.getPokemonList(PAGE_SIZE, page * PAGE_SIZE)
+            val offset = ((page-1) * PAGE_SIZE + 1)-1;
+            val response = api.getPokemonList(PAGE_SIZE, offset)
 
             val resultPokemon = response.results.mapIndexed { _, entry ->
                 val number = PokemonUtils.getPokemonNumber(entry)
