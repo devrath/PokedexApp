@@ -25,17 +25,22 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemsIndexed
 import com.istudio.pokedex.data.remote.models.PokedexListEntry
+import com.istudio.pokedex.ui.screens.pokemon_list.PokemonListVm
 
 @Composable
 fun PokemonLazyList(
-    pokemonList: LazyPagingItems<PokedexListEntry>,
     onItemClick:(PokedexListEntry)-> Unit,
+    viewModel: PokemonListVm = hiltViewModel(),
     funcCallBackImageTarget:(Drawable) -> Unit={}
 ){
+
+    val pokemonList =  viewModel.getPokemonList().collectAsLazyPagingItems()
     val state = rememberLazyGridState()
 
     LazyVerticalGrid(

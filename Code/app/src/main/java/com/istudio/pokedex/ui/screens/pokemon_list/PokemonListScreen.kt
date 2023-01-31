@@ -1,5 +1,6 @@
 package com.istudio.pokedex.ui.screens.pokemon_list
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -20,28 +21,19 @@ import com.istudio.pokedex.ui.screens.pokemon_list.composables.PokemonLazyList
 
 @Composable
 fun PokemonListScreen(
-    navController: NavController,
-    viewModel: PokemonListVm = hiltViewModel()
+    navController: NavController
 ) {
-
-    val pokemonList =  viewModel.getPokemonList().collectAsLazyPagingItems()
-
-    Surface(
-        color = MaterialTheme.colors.background,
-        modifier = Modifier.fillMaxSize()
+    Column(
+        modifier = Modifier.fillMaxSize().background(MaterialTheme.colors.background)
     ) {
-
-        Column {
-            Spacer(modifier = Modifier.height(20.dp))
-            PokemonBanner()
-            PokemonLazyList(
-                pokemonList = pokemonList,
-                onItemClick = { entry ->
-                    navController.navigate(
-                        "pokemon_detail_screen/${entry.dominentColor.toArgb()}/${entry.pokemonName}"
-                    )
-                }
-            )
-        }
+        Spacer(modifier = Modifier.height(20.dp))
+        PokemonBanner()
+        PokemonLazyList(
+            onItemClick = { entry ->
+                navController.navigate(
+                    "pokemon_detail_screen/${entry.dominentColor.toArgb()}/${entry.pokemonName}"
+                )
+            }
+        )
     }
 }
