@@ -19,19 +19,20 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.istudio.pokedex.R
 
 @Composable
 fun PokemonErrorBlock(
+    modifier: Modifier = Modifier,
     text: String = stringResource(id = R.string.str_something_went_wrong),
     image : Painter = painterResource(id = R.drawable.ic_something_went_wrong),
-    modifier: Modifier = Modifier,
     onActionClick:() -> Unit
 ) {
     Column(
-        modifier = Modifier.fillMaxSize(),
+        modifier = modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -53,4 +54,12 @@ fun PokemonErrorBlock(
         }
     }
     
+}
+
+@Preview
+@Composable
+private fun CurrentScreen() {
+    PokemonErrorBlock(){
+
+    }
 }

@@ -1,21 +1,20 @@
-package com.istudio.pokedex.ui.screens.pokemon_detail.composables
+package com.istudio.pokedex.ui.screens.pokemon_detail.composables.pokemon_body
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.istudio.pokedex.data.remote.responses.Pokemon
-import java.util.Locale
+import com.istudio.pokedex.ui.screens.pokemon_detail.composables.pokemon_body.stats.PokemonBaseStats
+import com.istudio.pokedex.ui.screens.pokemon_detail.composables.pokemon_body.attributes.PokemonAttributes
+import com.istudio.pokedex.ui.screens.pokemon_detail.composables.pokemon_body.name.PokemonName
 
 @Composable
 fun PokemonDetailSection(
@@ -30,18 +29,14 @@ fun PokemonDetailSection(
             .offset(y = 100.dp)
             .verticalScroll(scrollState)
     ) {
-        Text(
-            text = "#${pokemonInfo.id} ${pokemonInfo.name.capitalize(Locale.ROOT)}",
-            fontWeight = FontWeight.Bold,
-            fontSize = 30.sp,
-            textAlign = TextAlign.Center,
-            color = MaterialTheme.colors.onSurface
-        )
-        PokemonTypeSection(types = pokemonInfo.types)
-        PokemonDetailDataSection(
+        PokemonName(id = pokemonInfo.id, name = pokemonInfo.name)
+        PokemonTypes(types = pokemonInfo.types)
+        Spacer(modifier = Modifier.height(20.dp))
+        PokemonAttributes(
             pokemonWeight = pokemonInfo.weight,
             pokemonHeight = pokemonInfo.height
         )
+        Spacer(modifier = Modifier.height(20.dp))
         PokemonBaseStats(pokemonInfo = pokemonInfo)
     }
 }

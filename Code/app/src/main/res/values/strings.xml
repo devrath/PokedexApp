@@ -6,5 +6,10 @@
     <string name="str_something_went_wrong">Something went wrong</string>
     <string name="str_no_connectivity">No Connectivity</string>
     <string name="str_try_again">Try Again</string>
+    <string name="str_weight">Weight</string>
+    <string name="str_height">Height</string>
+    <string name="str_kg">Kg</string>
+    <string name="str_meter">Meter</string>
+    <string name="str_base_stats">Base stats</string>
 
 </resources>
