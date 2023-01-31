@@ -4,18 +4,16 @@ import android.graphics.drawable.Drawable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
+import androidx.paging.LoadState
+import androidx.paging.compose.LazyPagingItems
 import com.istudio.pokedex.data.remote.models.PokedexListEntry
 
 @Composable
 fun PokemonLazyList(
-    pokemonList : List<PokedexListEntry>,
+    pokemonList: LazyPagingItems<PokedexListEntry>,
     onItemClick:(PokedexListEntry)-> Unit,
     funcCallBackImageTarget:(Drawable) -> Unit={}
 ){
@@ -25,11 +23,33 @@ fun PokemonLazyList(
         verticalArrangement = Arrangement.SpaceBetween,
         state = state
     ){
-        items(pokemonList.size) { position ->
+
+        items(pokemonList.itemSnapshotList.items.size) { position ->
             PokemonListItem(
-                item=pokemonList[position],
+                item=pokemonList.itemSnapshotList.items[position],
                 onItemClick=onItemClick
             )
+        }
+
+        when (val state = pokemonList.loadState.refresh) { //FIRST LOAD
+            is LoadState.Error -> {
+                //TODO Error Item
+                //state.error to get error message
+            }
+            is LoadState.Loading -> { // Loading UI
+                //
+            }
+            else -> {}
+        }
+
+        when (val state = pokemonList.loadState.append) { // Pagination
+            is LoadState.Error -> {
+                //state.error to get error message
+            }
+            is LoadState.Loading -> { // Pagination Loading UI
+
+            }
+            else -> {}
         }
     }
 }

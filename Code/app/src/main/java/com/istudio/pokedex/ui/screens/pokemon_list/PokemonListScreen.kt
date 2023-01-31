@@ -12,15 +12,18 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import androidx.paging.compose.collectAsLazyPagingItems
 import com.istudio.pokedex.ui.screens.pokemon_list.composables.PokemonBanner
 import com.istudio.pokedex.ui.screens.pokemon_list.composables.PokemonLazyList
-import com.istudio.pokedex.ui.screens.pokemon_list.composables.PokemonSearch
 
 @Composable
 fun PokemonListScreen(
     navController: NavController,
     viewModel: PokemonListVm = hiltViewModel()
 ) {
+
+    val pokemonList = viewModel.getPokemonList().collectAsLazyPagingItems()
+
 
     Surface(
         color = MaterialTheme.colors.background,
@@ -31,7 +34,7 @@ fun PokemonListScreen(
             Spacer(modifier = Modifier.height(20.dp))
             PokemonBanner()
             PokemonLazyList(
-                pokemonList = viewModel.pokemonList.value,
+                pokemonList = pokemonList,
                 onItemClick = { entry ->
                     navController.navigate(
                         "pokemon_detail_screen/${entry.dominentColor.toArgb()}/${entry.pokemonName}"
