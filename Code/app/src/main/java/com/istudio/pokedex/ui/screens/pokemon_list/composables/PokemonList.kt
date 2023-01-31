@@ -5,10 +5,16 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.itemsIndexed
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
@@ -21,6 +27,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.itemsIndexed
 import com.istudio.pokedex.data.remote.models.PokedexListEntry
 
 @Composable
@@ -29,17 +36,15 @@ fun PokemonLazyList(
     onItemClick:(PokedexListEntry)-> Unit,
     funcCallBackImageTarget:(Drawable) -> Unit={}
 ){
-    val state = rememberLazyListState()
-    LazyColumn(
-        contentPadding = PaddingValues(12.dp),
-        verticalArrangement = Arrangement.SpaceBetween,
+    val state = rememberLazyGridState()
+
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(2),
         state = state
-    ){
-
-
-        items(pokemonList.itemSnapshotList.items.size) { position ->
+    ) {
+        itemsIndexed(pokemonList.itemSnapshotList.items) { index, item ->
             PokemonListItem(
-                item=pokemonList.itemSnapshotList.items[position],
+                item=item,
                 onItemClick=onItemClick
             )
         }
@@ -47,7 +52,7 @@ fun PokemonLazyList(
         pokemonList.apply {
             when {
                 loadState.refresh is LoadState.Loading -> {
-                    item { LoadingView(modifier = Modifier.fillParentMaxSize()) }
+                    item { LoadingView(modifier = Modifier.fillMaxSize()) }
                 }
                 loadState.append is LoadState.Loading -> {
                     item { LoadingItem() }
@@ -57,7 +62,7 @@ fun PokemonLazyList(
                     item {
                         ErrorItem(
                             message = e.error.localizedMessage!!,
-                            modifier = Modifier.fillParentMaxSize(),
+                            modifier = Modifier.fillMaxSize(),
                             onClickRetry = { retry() }
                         )
                     }

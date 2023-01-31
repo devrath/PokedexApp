@@ -27,15 +27,7 @@ class PokemonListVm @Inject constructor(
     private val repository: PagingRepository
 ): ViewModel() {
 
-    private var curPage = 0
-    // Holds the list of item data
-    var pokemonList = mutableStateOf<List<PokedexListEntry>>(listOf())
-    // Holds the error state
-    var loadError = mutableStateOf("")
-
     fun getPokemonList(): Flow<PagingData<PokedexListEntry>> = repository.getPokemon().cachedIn(viewModelScope)
-
-
 
 
     /**

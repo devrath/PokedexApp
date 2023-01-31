@@ -12,7 +12,9 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.istudio.pokedex.data.remote.models.PokedexListEntry
 import com.istudio.pokedex.ui.screens.pokemon_list.composables.PokemonBanner
 import com.istudio.pokedex.ui.screens.pokemon_list.composables.PokemonLazyList
 
@@ -22,8 +24,7 @@ fun PokemonListScreen(
     viewModel: PokemonListVm = hiltViewModel()
 ) {
 
-    val pokemonList = viewModel.getPokemonList().collectAsLazyPagingItems()
-
+    val pokemonList =  viewModel.getPokemonList().collectAsLazyPagingItems()
 
     Surface(
         color = MaterialTheme.colors.background,
