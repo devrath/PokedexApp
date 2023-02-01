@@ -11,6 +11,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
+import androidx.compose.foundation.lazy.grid.LazyGridItemScope
+import androidx.compose.foundation.lazy.grid.LazyGridScope
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
@@ -33,25 +36,31 @@ import androidx.paging.compose.itemsIndexed
 import com.istudio.pokedex.data.remote.models.PokedexListEntry
 import com.istudio.pokedex.ui.screens.pokemon_list.PokemonListVm
 
+/**
+ * https://stackoverflow.com/a/73962911/1083093
+ */
 @Composable
 fun PokemonLazyList(
     onItemClick:(PokedexListEntry)-> Unit,
     viewModel: PokemonListVm = hiltViewModel(),
-    funcCallBackImageTarget:(Drawable) -> Unit={}
+    loadingScreenState:() -> Unit = {},
+    errorScreenState:() -> Unit = {},
 ){
 
     val pokemonList =  viewModel.getPokemonList().collectAsLazyPagingItems()
     val state = rememberLazyGridState()
-
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
         state = state
     ) {
-        itemsIndexed(pokemonList.itemSnapshotList.items) { index, item ->
-            PokemonListItem(
-                item=item,
-                onItemClick=onItemClick
-            )
+
+        itemsCustom(pokemonList){
+            if (it != null) {
+                PokemonListItem(
+                    item=it,
+                    onItemClick=onItemClick
+                )
+            }
         }
 
         pokemonList.apply {
@@ -60,7 +69,7 @@ fun PokemonLazyList(
                     item { LoadingView(modifier = Modifier.fillMaxSize()) }
                 }
                 loadState.append is LoadState.Loading -> {
-                    item { LoadingItem() }
+                    item { LoadingView(modifier = Modifier.fillMaxSize()) }
                 }
                 loadState.refresh is LoadState.Error -> {
                     val e = pokemonList.loadState.refresh as LoadState.Error
@@ -103,7 +112,8 @@ fun LoadingView(
 @Composable
 fun LoadingItem() {
     CircularProgressIndicator(
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier
+            .fillMaxWidth()
             .padding(16.dp)
             .wrapContentWidth(Alignment.CenterHorizontally)
     )
@@ -131,5 +141,44 @@ fun ErrorItem(
         OutlinedButton(onClick = onClickRetry) {
             Text(text = "Try again")
         }
+    }
+}
+
+
+fun <T : Any> LazyGridScope.itemsCustom(
+    items: LazyPagingItems<T>,
+    key: ((item: T) -> Any)? = null,
+    span: ((item: T) -> GridItemSpan)? = null,
+    contentType: ((item: T) -> Any)? = null,
+    itemContent: @Composable LazyGridItemScope.(value: T?) -> Unit
+) {
+    items(
+        count = items.itemCount,
+        key = if (key == null) null else { index ->
+            val item = items.peek(index)
+            if (item != null) {
+                key(item)
+            }
+        },
+        span = if (span == null) null else { index ->
+            val item = items.peek(index)
+            if (item == null) {
+                GridItemSpan(1)
+            } else {
+                span(item)
+            }
+        },
+        contentType = if (contentType == null) {
+            { null }
+        } else { index ->
+            val item = items.peek(index)
+            if (item == null) {
+                null
+            } else {
+                contentType(item)
+            }
+        }
+    ) { index ->
+        itemContent(items[index])
     }
 }
