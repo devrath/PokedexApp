@@ -27,7 +27,7 @@ class PokemonListVm @Inject constructor(
     private val repository: PagingRepository
 ): ViewModel() {
 
-    fun getPokemonList(): Flow<PagingData<PokedexListEntry>> = repository.getPokemon().cachedIn(viewModelScope)
+    fun getPokemonList(): Flow<PagingData<PokedexListEntry>> = repository.getPokemon()
 
 
     /**

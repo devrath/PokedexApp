@@ -32,6 +32,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
+import androidx.paging.compose.items
 import androidx.paging.compose.itemsIndexed
 import com.istudio.pokedex.data.remote.models.PokedexListEntry
 import com.istudio.pokedex.ui.screens.pokemon_list.PokemonListVm
@@ -49,41 +50,43 @@ fun PokemonLazyList(
 
     val pokemonList =  viewModel.getPokemonList().collectAsLazyPagingItems()
     val state = rememberLazyGridState()
-    LazyVerticalGrid(
-        columns = GridCells.Fixed(2),
-        state = state
-    ) {
 
-        itemsCustom(pokemonList){
-            if (it != null) {
+    LazyColumn(
+        modifier = Modifier.fillMaxSize(),
+        contentPadding = PaddingValues(all = 12.dp),
+        verticalArrangement = Arrangement.spacedBy(12.dp)
+    ) {
+        items(
+            items = pokemonList,
+            key = { unsplashImage ->
+                unsplashImage.number
+            }
+        ) { pokemon ->
+            pokemon?.let {
                 PokemonListItem(
                     item=it,
                     onItemClick=onItemClick
                 )
             }
-        }
 
-        pokemonList.apply {
-            when {
-                loadState.refresh is LoadState.Loading -> {
-                    item { LoadingView(modifier = Modifier.fillMaxSize()) }
-                }
-                loadState.append is LoadState.Loading -> {
-                    item { LoadingView(modifier = Modifier.fillMaxSize()) }
-                }
-                loadState.refresh is LoadState.Error -> {
-                    val e = pokemonList.loadState.refresh as LoadState.Error
-                    item {
+            pokemonList.apply {
+                when {
+                    loadState.refresh is LoadState.Loading -> {
+                        LoadingView(modifier = Modifier.fillMaxSize())
+                    }
+                    loadState.append is LoadState.Loading -> {
+                        LoadingView(modifier = Modifier.fillMaxSize())
+                    }
+                    loadState.refresh is LoadState.Error -> {
+                        val e = pokemonList.loadState.refresh as LoadState.Error
                         ErrorItem(
                             message = e.error.localizedMessage!!,
                             modifier = Modifier.fillMaxSize(),
                             onClickRetry = { retry() }
                         )
                     }
-                }
-                loadState.append is LoadState.Error -> {
-                    val e = pokemonList.loadState.append as LoadState.Error
-                    item {
+                    loadState.append is LoadState.Error -> {
+                        val e = pokemonList.loadState.append as LoadState.Error
                         ErrorItem(
                             message = e.error.localizedMessage!!,
                             onClickRetry = { retry() }
@@ -92,6 +95,7 @@ fun PokemonLazyList(
                 }
             }
         }
+
     }
 }
 
@@ -108,17 +112,6 @@ fun LoadingView(
         CircularProgressIndicator()
     }
 }
-
-@Composable
-fun LoadingItem() {
-    CircularProgressIndicator(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp)
-            .wrapContentWidth(Alignment.CenterHorizontally)
-    )
-}
-
 
 @Composable
 fun ErrorItem(
@@ -141,44 +134,5 @@ fun ErrorItem(
         OutlinedButton(onClick = onClickRetry) {
             Text(text = "Try again")
         }
-    }
-}
-
-
-fun <T : Any> LazyGridScope.itemsCustom(
-    items: LazyPagingItems<T>,
-    key: ((item: T) -> Any)? = null,
-    span: ((item: T) -> GridItemSpan)? = null,
-    contentType: ((item: T) -> Any)? = null,
-    itemContent: @Composable LazyGridItemScope.(value: T?) -> Unit
-) {
-    items(
-        count = items.itemCount,
-        key = if (key == null) null else { index ->
-            val item = items.peek(index)
-            if (item != null) {
-                key(item)
-            }
-        },
-        span = if (span == null) null else { index ->
-            val item = items.peek(index)
-            if (item == null) {
-                GridItemSpan(1)
-            } else {
-                span(item)
-            }
-        },
-        contentType = if (contentType == null) {
-            { null }
-        } else { index ->
-            val item = items.peek(index)
-            if (item == null) {
-                null
-            } else {
-                contentType(item)
-            }
-        }
-    ) { index ->
-        itemContent(items[index])
     }
 }
