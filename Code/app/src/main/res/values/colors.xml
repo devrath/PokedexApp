@@ -24,4 +24,8 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
+    <color name="cardShading">#FF000000</color>
+    <color name="cardText">#FFFFFFFF</color>
+
+
 </resources>

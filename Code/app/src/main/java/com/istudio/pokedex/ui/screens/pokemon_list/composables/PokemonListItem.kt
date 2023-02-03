@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -22,6 +23,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -30,6 +32,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import com.istudio.pokedex.R
 import com.istudio.pokedex.data.remote.models.PokedexListEntry
 import com.istudio.pokedex.ui.screens.pokemon_list.PokemonListVm
 import com.istudio.pokedex.ui.theme.Nunito
@@ -78,7 +81,7 @@ fun PokemonListItem(
                 .background(
                     brush = Brush.verticalGradient(
                         colors = listOf(
-                            Color.Transparent, Color.Black
+                            Color.Transparent, colorResource(R.color.cardShading)
                         ),
                         startY = 300f
                     )
@@ -94,7 +97,7 @@ fun PokemonListItem(
             Text(
                 text = item.pokemonName,
                 style = TextStyle(
-                    color = Color.White,
+                    color = colorResource(id = R.color.cardText),
                     fontSize = 25.sp,
                     fontFamily = Nunito,
                     fontStyle = FontStyle.Normal,
