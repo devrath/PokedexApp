@@ -7,56 +7,28 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import androidx.palette.graphics.Palette
 import com.istudio.pokedex.data.remote.models.PokedexListEntry
+import com.istudio.pokedex.data.remote.paging.PagingRepository
 import com.istudio.pokedex.domain.feature.PokemonRepositoryFeature
 import com.istudio.pokedex.util.Constants.PAGE_SIZE
 import com.istudio.pokedex.util.PokemonUtils
 import com.istudio.pokedex.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import java.util.Locale
 import javax.inject.Inject
 
 @HiltViewModel
 class PokemonListVm @Inject constructor(
-    private val repository: PokemonRepositoryFeature
+    private val repository: PagingRepository
 ): ViewModel() {
 
-    private var curPage = 0
-    // Holds the list of item data
-    var pokemonList = mutableStateOf<List<PokedexListEntry>>(listOf())
-    // Holds the error state
-    var loadError = mutableStateOf("")
+    fun getPokemonList(): Flow<PagingData<PokedexListEntry>> = repository.getPokemon()
 
-    init {
-        loadPokemonPaginated()
-    }
-
-    fun loadPokemonPaginated() {
-        viewModelScope.launch {
-            // Ge the data from API
-            val result = repository.getPokemonList(PAGE_SIZE, curPage * PAGE_SIZE)
-            when(result) {
-                is Resource.Success -> {
-                    result.data?.results?.let {
-                        val pokedexEntries = result.data.results.mapIndexed { index, entry ->
-                            val number = PokemonUtils.getPokemonNumber(entry)
-                            val url = PokemonUtils.formatPokemonUrl(entry.url)
-                            PokedexListEntry(entry.name.capitalize(Locale.ROOT), url, number.toInt())
-                        }
-                        pokemonList.value += pokedexEntries
-                    }
-                }
-                is Resource.Error -> {
-                    loadError.value = result.message!!
-                }
-                is Resource.Loading -> {
-
-                }
-            }
-        }
-    }
 
     /**
      * What it does: It calculates the dominant color based on a drawable

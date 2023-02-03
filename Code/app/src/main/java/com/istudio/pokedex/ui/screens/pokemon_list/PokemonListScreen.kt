@@ -1,5 +1,6 @@
 package com.istudio.pokedex.ui.screens.pokemon_list
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -12,32 +13,27 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
+import com.istudio.pokedex.data.remote.models.PokedexListEntry
 import com.istudio.pokedex.ui.screens.pokemon_list.composables.PokemonBanner
 import com.istudio.pokedex.ui.screens.pokemon_list.composables.PokemonLazyList
-import com.istudio.pokedex.ui.screens.pokemon_list.composables.PokemonSearch
 
 @Composable
 fun PokemonListScreen(
-    navController: NavController,
-    viewModel: PokemonListVm = hiltViewModel()
+    navController: NavController
 ) {
-
-    Surface(
-        color = MaterialTheme.colors.background,
-        modifier = Modifier.fillMaxSize()
+    Column(
+        modifier = Modifier.fillMaxSize().background(MaterialTheme.colors.background)
     ) {
-
-        Column {
-            Spacer(modifier = Modifier.height(20.dp))
-            PokemonBanner()
-            PokemonLazyList(
-                pokemonList = viewModel.pokemonList.value,
-                onItemClick = { entry ->
-                    navController.navigate(
-                        "pokemon_detail_screen/${entry.dominentColor.toArgb()}/${entry.pokemonName}"
-                    )
-                }
-            )
-        }
+        Spacer(modifier = Modifier.height(20.dp))
+        PokemonBanner()
+        PokemonLazyList(
+            onItemClick = { entry ->
+                navController.navigate(
+                    "pokemon_detail_screen/${entry.dominentColor.toArgb()}/${entry.pokemonName}"
+                )
+            }
+        )
     }
 }
