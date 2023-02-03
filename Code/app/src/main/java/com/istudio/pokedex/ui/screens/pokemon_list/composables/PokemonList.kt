@@ -43,11 +43,11 @@ import com.istudio.pokedex.ui.screens.pokemon_list.PokemonListVm
 @Composable
 fun PokemonLazyList(
     onItemClick:(PokedexListEntry)-> Unit,
-    viewModel: PokemonListVm = hiltViewModel(),
     loadingScreenState:() -> Unit = {},
     errorScreenState:() -> Unit = {},
 ){
 
+    val viewModel: PokemonListVm = hiltViewModel()
     val pokemonList =  viewModel.getPokemonList().collectAsLazyPagingItems()
     val state = rememberLazyGridState()
 
