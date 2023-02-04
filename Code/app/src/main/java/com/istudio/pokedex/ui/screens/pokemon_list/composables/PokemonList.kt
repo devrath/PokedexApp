@@ -49,9 +49,10 @@ fun PokemonLazyList(
 
     val viewModel: PokemonListVm = hiltViewModel()
     val pokemonList =  viewModel.getPokemonList().collectAsLazyPagingItems()
-    val state = rememberLazyGridState()
+    val state = rememberLazyListState()
 
     LazyColumn(
+        state = state,
         modifier = Modifier.fillMaxSize(),
         contentPadding = PaddingValues(all = 12.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp)
